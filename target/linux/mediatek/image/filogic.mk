@@ -208,7 +208,7 @@ define Device/smartrg_sdg-8733
 $(call Device/adtran_smartrg)
   DEVICE_MODEL := SDG-8733
   DEVICE_DTS := mt7988a-smartrg-SDG-8733
-  DEVICE_PACKAGES += kmod-mt7996-firmware kmod-phy-aquantia kmod-usb3 mt7988-wo-firmware
+  DEVICE_PACKAGES += kmod-mt7996-firmware kmod-phy-aquantia kmod-usb3
 endef
 TARGET_DEVICES += smartrg_sdg-8733
 
@@ -216,7 +216,7 @@ define Device/smartrg_sdg-8733a
 $(call Device/adtran_smartrg)
   DEVICE_MODEL := SDG-8733A
   DEVICE_DTS := mt7988d-smartrg-SDG-8733A
-  DEVICE_PACKAGES += mt7988-2p5g-phy-firmware kmod-mt7996-233-firmware kmod-phy-aquantia mt7988-wo-firmware
+  DEVICE_PACKAGES += mt7988-2p5g-phy-firmware kmod-mt7996-233-firmware kmod-phy-aquantia
 endef
 TARGET_DEVICES += smartrg_sdg-8733a
 
@@ -224,7 +224,7 @@ define Device/smartrg_sdg-8734
 $(call Device/adtran_smartrg)
   DEVICE_MODEL := SDG-8734
   DEVICE_DTS := mt7988a-smartrg-SDG-8734
-  DEVICE_PACKAGES += kmod-mt7996-firmware kmod-phy-aquantia kmod-sfp kmod-usb3 mt7988-wo-firmware
+  DEVICE_PACKAGES += kmod-mt7996-firmware kmod-phy-aquantia kmod-sfp kmod-usb3
 endef
 TARGET_DEVICES += smartrg_sdg-8734
 
@@ -402,7 +402,7 @@ define Device/bananapi_bpi-r4-common
   DEVICE_DTS_OVERLAY:= mt7988a-bananapi-bpi-r4-emmc mt7988a-bananapi-bpi-r4-rtc mt7988a-bananapi-bpi-r4-sd mt7988a-bananapi-bpi-r4-wifi-mt7996a
   DEVICE_DTC_FLAGS := --pad 4096
   DEVICE_PACKAGES := kmod-hwmon-pwmfan kmod-i2c-mux-pca954x kmod-eeprom-at24 kmod-mt7996-firmware kmod-mt7996-233-firmware \
-		     kmod-rtc-pcf8563 kmod-sfp kmod-usb3 e2fsprogs f2fsck mkf2fs mt7988-wo-firmware
+		     kmod-rtc-pcf8563 kmod-sfp kmod-usb3 e2fsprogs f2fsck mkf2fs
   IMAGES := sysupgrade.itb
   KERNEL_LOADADDR := 0x46000000
   KERNEL_INITRAMFS_SUFFIX := -recovery.itb
@@ -1460,12 +1460,26 @@ define Device/zbtlink_zbt-z8102ax
   UBINIZE_OPTS := -E 5
   BLOCKSIZE := 128k
   PAGESIZE := 2048
-  IMAGE_SIZE := 65536k
   IMAGES += factory.bin
   IMAGE/factory.bin := append-ubi | check-size $$(IMAGE_SIZE)
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += zbtlink_zbt-z8102ax
+
+define Device/zbtlink_z8102ax-64m
+  $(call Device/zbtlink_zbt-z8102ax)
+  DEVICE_VARIANT := 64M NAND
+  DEVICE_DTS := mt7981b-zbtlink-z8102ax-64m
+  IMAGE_SIZE := 65536k
+endef
+TARGET_DEVICES += zbtlink_z8102ax-64m
+
+define Device/zbtlink_z8102ax-128m
+  $(call Device/zbtlink_zbt-z8102ax)
+  DEVICE_VARIANT := 128M NAND
+  DEVICE_DTS := mt7981b-zbtlink-z8102ax-128m
+  IMAGE_SIZE := 131072k
+endef
+TARGET_DEVICES += zbtlink_z8102ax-128m
 
 define Device/zbtlink_zbt-z8103ax
   DEVICE_VENDOR := Zbtlink
