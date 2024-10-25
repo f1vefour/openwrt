@@ -69,14 +69,14 @@
 			function = LED_FUNCTION_STATUS;
 		};
 
-		4g {
+		modem1 {
 			gpios = <&pio 8 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_BLUE>;
 			function = LED_FUNCTION_USB;
 			function-enumerator = <0>;
 		};
 
-		4g2 {
+		modem2 {
 			gpios = <&pio 14 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_BLUE>;
 			function = LED_FUNCTION_USB;
@@ -101,14 +101,14 @@
 			gpios = <&pio 3 GPIO_ACTIVE_HIGH>;
 		};
 
-		5g1 {
-			gpio-export,name = "5g1";
+		modem1 {
+			gpio-export,name = "modem1";
 			gpio-export,output = <1>;
 			gpios = <&pio 4 GPIO_ACTIVE_HIGH>;
 		};
 
-		5g2 {
-			gpio-export,name = "5g2";
+		modem2 {
+			gpio-export,name = "modem2";
 			gpio-export,output = <1>;
 			gpios = <&pio 5 GPIO_ACTIVE_HIGH>;
 		};
@@ -233,9 +233,8 @@
 				read-only;
 			};
 
-			partition@580000 {
+			nand_rootfs: partition@580000 {
 				label = "ubi";
-				reg = <0x580000 0x4000000>;
 			};
 		};
 	};
