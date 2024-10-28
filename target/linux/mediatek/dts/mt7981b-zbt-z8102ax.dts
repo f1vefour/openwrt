@@ -5,7 +5,7 @@
 #include "mt7981.dtsi"
 
 / {
-	model = "Zbtlink ZBT-Z8102AX";
+	model = "ZBT Z8102AX";
 	compatible = "zbtlink,zbt-z8102ax", "mediatek,mt7981";
 
 	aliases {
@@ -38,13 +38,8 @@
 		button-mesh {
 			label = "mesh";
 			linux,code = <BTN_0>;
+			linux,input-type = <EV_SW>;
 			gpios = <&pio 0 GPIO_ACTIVE_HIGH>;
-		};
-
-		button-hub {
-			label = "hub";
-			linux,code = <BTN_1>;
-			gpios = <&pio 12 GPIO_ACTIVE_HIGH>;
 		};
 	};
 
@@ -52,34 +47,34 @@
 		compatible = "gpio-leds";
 
 		led_status_red: red {
-			gpios = <&pio 9 GPIO_ACTIVE_HIGH>;
 			color = <LED_COLOR_ID_RED>;
 			function = LED_FUNCTION_STATUS;
+			gpios = <&pio 9 GPIO_ACTIVE_HIGH>;
 		};
 
 		led_status_green: green {
-			gpios = <&pio 10 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_STATUS;
+			gpios = <&pio 10 GPIO_ACTIVE_LOW>;
 		};
 
-		blue {
-			gpios = <&pio 11 GPIO_ACTIVE_LOW>;
+		led_status_blue: blue {
 			color = <LED_COLOR_ID_BLUE>;
 			function = LED_FUNCTION_STATUS;
+			gpios = <&pio 11 GPIO_ACTIVE_LOW>;
 		};
 
-		modem1 {
-			gpios = <&pio 8 GPIO_ACTIVE_LOW>;
-			color = <LED_COLOR_ID_BLUE>;
+		led-modem1 {
+			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_USB;
+			gpios = <&pio 8 GPIO_ACTIVE_LOW>;
 			function-enumerator = <0>;
 		};
 
-		modem2 {
-			gpios = <&pio 14 GPIO_ACTIVE_LOW>;
-			color = <LED_COLOR_ID_BLUE>;
+		led-modem2 {
+			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_USB;
+			gpios = <&pio 14 GPIO_ACTIVE_LOW>;
 			function-enumerator = <1>;
 		};
 	};
@@ -115,14 +110,14 @@
 
 		sim1 {
 			gpio-export,name = "sim1";
-			gpio-export,output = <1>;
-			gpios = <&pio 6 GPIO_ACTIVE_HIGH>;
+			gpio-export,output = <0>;
+			gpios = <&pio 6 GPIO_ACTIVE_LOW>;
 		};
 
 		sim2 {
 			gpio-export,name = "sim2";
-			gpio-export,output = <1>;
-			gpios = <&pio 7 GPIO_ACTIVE_HIGH>;
+			gpio-export,output = <0>;
+			gpios = <&pio 7 GPIO_ACTIVE_LOW>;
 		};
 	};
 };
@@ -289,14 +284,14 @@
 
 		conf-pu {
 			pins = "SPI0_CS", "SPI0_HOLD", "SPI0_WP";
-			drive-strength = <8>;
-			bias-pull-up = <103>;
+			drive-strength = <MTK_DRIVE_8mA>;
+			bias-pull-up = <MTK_PUPD_SET_R1R0_11>;
 		};
 
 		conf-pd {
 			pins = "SPI0_CLK", "SPI0_MOSI", "SPI0_MISO";
-			drive-strength = <8>;
-			bias-pull-down = <103>;
+			drive-strength = <MTK_DRIVE_8mA>;
+			bias-pull-down = <MTK_PUPD_SET_R1R0_11>;
 		};
 	};
 };
@@ -319,7 +314,6 @@
 
 &wifi {
 	status = "okay";
-
 	nvmem-cells = <&eeprom_factory>;
 	nvmem-cell-names = "eeprom";
 };
